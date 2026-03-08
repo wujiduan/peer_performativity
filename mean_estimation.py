@@ -192,7 +192,7 @@ def main():
     nodelist = df["user_id"].values
 
 
-    labels = {"mean": "Mean estimation", "perfect": "Perfect prediction", "ridge": "OLS", "neural_net": "MLP"}
+    labels = {"mean": "Mean", "perfect": "Perfect", "ridge": "OLS", "neural_net": "MLP"}
     # "perfect", "mean", "ridge", 
     for model_name in ["neural_net"]:
         if os.path.exists(results_folder / f"{model_name}_sl_modified_stubborn_whole_record{retrain_T}.pk"):
