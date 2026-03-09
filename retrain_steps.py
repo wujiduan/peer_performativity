@@ -99,60 +99,9 @@ numerical_features = [
     ]
 categorical_features = [
     "gender",
-    # "region"
     ]
 textual_features = [
-    # "body",
-    # "I_am_working_in_field",
-    # "spoken_languages",
-    # "hobbies",
-    # "I_most_enjoy_good_food",
-    # "pets",
-    # "body_type",
-    # "my_eyesight",
-    # "eye_color",
-    # "hair_color",
-    # "hair_type",
-    # "completed_level_of_education",
-    # "favourite_color",
-    # "relation_to_smoking",
     "relation_to_alcohol",
-    # "sign_in_zodiac",
-    # "on_pokec_i_am_looking_for",
-    # "love_is_for_me",
-    # "relation_to_casual_sex",
-    # "my_partner_should_be",
-    # "marital_status",
-    # "children",
-    # "relation_to_children",
-    # "I_like_movies",
-    # "I_like_watching_movie",
-    # "I_like_music",
-    # "I_mostly_like_listening_to_music",
-    # "the_idea_of_good_evening",
-    # "I_like_specialties_from_kitchen",
-    # "fun",
-    # "I_am_going_to_concerts",
-    # "my_active_sports",
-    # "my_passive_sports",
-    # "profession",
-    # "I_like_books"
-    # "life_style",
-    # "music",
-    # "cars",
-    # "politics",
-    # "relationships",
-    # "art_culture",
-    # "hobbies_interests",
-    # "science_technologies",
-    # "computers_internet",
-    # "education",
-    # "sport",
-    # "movies",
-    # "travelling",
-    # "health",
-    # "companies_brands",
-    # "more"
 ]
 
 
@@ -656,8 +605,7 @@ def plot_adjust(innate_opinions, policy, strong_perform):
     colors = ["tab:blue", "tab:orange", "tab:green", "tab:red"]
     models = ["perfect", "ridge", "neural_net", "mean"]
 
-    # colors = ["tab:blue", "tab:orange"]
-    # models = ["perfect", "ridge"]
+    
     x = np.arange(0, retrain_T+1)
     if policy == "steer":
     
@@ -674,7 +622,6 @@ def plot_adjust(innate_opinions, policy, strong_perform):
             x_psl_gamma0 = x_psl_gamma0[stubborn_node, -1]
 
         plt.hlines(y=x_psl_gamma0, xmin=0, xmax=retrain_T, linestyle='--', label=r"$(x_{ex}^{(T)})_l$" + "(Perfect,\n" + r"$\beta_k=0,k\notin \{l\}\cup S$)", color='purple')
-        # plt.hlines(y=FJ_equilibrium[stubborn_node], xmin=0, xmax=horizon, linestyle='--', label=r"($FJ_K$($x^*$)$)_l$", color='black')
         
         for i in range(len(models)):
             
@@ -698,7 +645,6 @@ def plot_adjust(innate_opinions, policy, strong_perform):
         mean_labels = [r"Mean($x_{ex}^{(t)}$) (Perfect prediction)", r"Mean($x_{ex}^{(t)}$) (OLS)", r"Mean($x_{ex}^{(t)}$) (MLP)", r"Mean($x_{ex}^{(t)}$) (Mean estimation)"]
         std_labels = [r"Var($x_{ex}^{(t)}$) (Perfect prediction)", r"Var($x_{ex}^{(t)}$) (OLS)", r"Var($x_{ex}^{(t)}$) (MLP)", r"Var($x_{ex}^{(t)}$) (Mean estimation)"]
         labels = ["Perfect", "OLS", "MLP", "Mean"]
-        # labels = [r"$x_{ex}^{(t)}$ (Perfect prediction)", r"$x_{ex}^{(t)}$ (OLS)"]
         
         fig, ax = plt.subplots()
         step_gap = 15
@@ -713,14 +659,11 @@ def plot_adjust(innate_opinions, policy, strong_perform):
         df = {}
         for i in range(len(models)):
             
-            # print("outer debug", i)
-            # print("outer debug", len(models))
+            
             if os.path.exists(results_folder + models[i] + "_" + policy + "_whole_record" + str(retrain_T) + ".pk"):
                 with open(results_folder + models[i] + "_" + policy + "_whole_record" + str(retrain_T) + ".pk", "rb") as f:
                     whole_opinions = pickle.load(f)
-                # whole_opinions_expanded = [whole_opinions[t,:] for t in range(retrain_T + 1)]
-                # print("debug", i)
-                # print("debug", len(models))
+               
                 df[labels[i]] = whole_opinions[:, :]
                 
                 
@@ -764,12 +707,7 @@ def plot_adjust(innate_opinions, policy, strong_perform):
                 label=m,
                 color=colors[i]
             )
-        # for off, m in zip(offsets, models_u):
-            
-
-
-        # tick_steps = np.arange(0, retrain_T + 1, 2)
-        # plt.xticks(positions_base[tick_steps], tick_steps, fontsize=12)
+        
         ax.set_xticks(positions_base[::5])
         ax.set_xticklabels(np.arange(retrain_T + 1)[::5], fontsize=12)
 
@@ -777,10 +715,7 @@ def plot_adjust(innate_opinions, policy, strong_perform):
         plt.ylabel(r"Opinion $x_{ex}^{(t)}$", fontsize=18)
         plt.xlabel(r"Retraining step $t$", fontsize=18)
         plt.yticks(fontsize=12)
-        # legend_handles = [
-        #     plt.Line2D([0], [0], color=colors[idx], lw=8, label=model_name)
-        #     for idx, model_name in enumerate(models)
-        # ]
+        
         plt.legend(loc="upper right", bbox_to_anchor=(1,1), frameon=False, fontsize=15, columnspacing=0.2, labelspacing=0.2, borderpad=0.2, handletextpad=0.2)
              
         plt.savefig(param_folder + "all_parametric_sl_retrain_steps.pdf", bbox_inches='tight')
